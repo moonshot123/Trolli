@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="favorate.model.Favorate">
+
+	<!-- 위시리스트(gettotal) -->
+	<select id="GetTotalCount" resultType="int">
+		select count(*) from favorate order by favoratenum desc
+	</select>
+	
+	<!-- 위시리스트보기 -->
+	<select id="GetDataList" resultType="MyFavorate" parameterType="hashmap">
+		select favorate.favoratenum,favorate.hotelnum,favorate.membernum,favorate.hotelname,favorate.hotelscore,
+		hotels.hotelnum,hotels.hotelname,hotels.hotelscore
+		from favorate,hotels 
+		where favorate.hotelnum = hotels.hotelnum
+		order by favoratenum desc
+	</select>
+	
+	<insert id="insertFavorate" parameterType="MyFavorate">
+	insert into favorate(favoratenum,membernum,hotelnum,hotelname,hotelimg1,hotelscore) 
+	values(favorateseq.nextval,#{membernum},#{hotelnum},
+	#{hotelname,jdbcType=VARCHAR},#{hotelimg1,jdbcType=VARCHAR},#{hotelscore})
+	</insert>
+	
+	 <!-- 위시리스트삭제  -->
+	<delete id="deletedata"  parameterType="MyFavorate">
+	 	delete from favorate where hotelnum=#{hotelnum}
+	 </delete>
+	
+	
+	
+	
+</mapper>

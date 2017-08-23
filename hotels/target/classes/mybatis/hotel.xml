@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hotel.model.Hotel">
+
+	<!-- 메인에서 검색하기값 리스트보여주는 곳 -->
+	<!-- 메인에서 검색하기값 리스트보여주는 곳 -->
+	<select id="GetDataList" resultType="MyHotel" parameterType="hashmap">
+	<![CDATA[	
+		select hotelnum, membernum, companyregnum,  hotelcategory, hotelname, hoteladdr, hotelimg1, hotelimg2,
+		hotelimg3, hotelimg4, hotelproduce1, hotelproduce2, hotelproduce3, hotelfacility, hotelscore,roomprice from(
+		select h.hotelnum, membernum, companyregnum,  hotelcategory, hotelname, hoteladdr, hotelimg1, hotelimg2,
+		hotelimg3, hotelimg4, hotelproduce1, hotelproduce2, hotelproduce3, hotelfacility, hotelscore, roomprice from
+		hotels h, 
+		(select hotelnum, min(roomprice) roomprice from 
+		(select hotelnum, roompeople,roomprice from rooms where roomnum not in 
+		(select roomnum from reservation 
+		where enddate > #{searchStart,jdbcType=DATE} and startdate < #{searchEnd,jdbcType=DATE}
+		)and roompeople >= #{roompeople ,jdbcType=VARCHAR}
+		)group by hotelnum) r 
+		where h.hotelnum=r.hotelnum)
+		]]>
+		<if test="search_p neq '' "> 
+			where hotelname like #{search_p} or hoteladdr like #{search_p}
+		</if>
+		order by hotelscore desc
+	</select>
+	
+	<!-- 메인에서 검색하기값 리스트보여주는 곳 -->
+	<select id="GetDataList1" resultType="MyHotel" parameterType="hashmap">
+	<![CDATA[	
+		select hotelnum, membernum, companyregnum,  hotelcategory, hotelname, hoteladdr, hotelimg1, hotelimg2,
+		hotelimg3, hotelimg4, hotelproduce1, hotelproduce2, hotelproduce3, hotelfacility, hotelscore,roomprice from(
+		select h.hotelnum, membernum, companyregnum,  hotelcategory, hotelname, hoteladdr, hotelimg1, hotelimg2,
+		hotelimg3, hotelimg4, hotelproduce1, hotelproduce2, hotelproduce3, hotelfacility, hotelscore, roomprice from
+		hotels h, 
+		(select hotelnum, min(roomprice) roomprice from 
+		(select hotelnum, roompeople,roomprice from rooms where roomnum not in 
+		(select roomnum from reservation 
+		where enddate > #{searchStart,jdbcType=DATE} and startdate < #{searchEnd,jdbcType=DATE}
+		)and roompeople >= #{roompeople ,jdbcType=VARCHAR}
+		)group by hotelnum) r 
+		where h.hotelnum=r.hotelnum)
+		]]>
+		<if test="search_p neq '' "> 
+			where hotelname like #{search_p} or hoteladdr like #{search_p}
+		</if>
+		order by roomprice asc
+	</select>
+	
+	<!-- 메인에서 검색하기값 리스트보여주는 곳 -->
+	<select id="GetDataList2" resultType="MyHotel" parameterType="hashmap">
+	<![CDATA[	
+		select hotelnum, membernum, companyregnum,  hotelcategory, hotelname, hoteladdr, hotelimg1, hotelimg2,
+		hotelimg3, hotelimg4, hotelproduce1, hotelproduce2, hotelproduce3, hotelfacility, hotelscore,roomprice from(
+		select h.hotelnum, membernum, companyregnum,  hotelcategory, hotelname, hoteladdr, hotelimg1, hotelimg2,
+		hotelimg3, hotelimg4, hotelproduce1, hotelproduce2, hotelproduce3, hotelfacility, hotelscore, roomprice from
+		hotels h, 
+		(select hotelnum, max(roomprice) roomprice from 
+		(select hotelnum, roompeople,roomprice from rooms where roomnum not in 
+		(select roomnum from reservation 
+		where enddate > #{searchStart,jdbcType=DATE} and startdate < #{searchEnd,jdbcType=DATE}
+		)and roompeople >= #{roompeople ,jdbcType=VARCHAR}
+		)group by hotelnum) r 
+		where h.hotelnum=r.hotelnum)
+		]]>
+		<if test="search_p neq '' "> 
+			where hotelname like #{search_p} or hoteladdr like #{search_p}
+		</if>
+		order by roomprice desc
+	</select>
+	
+	
+	
+	<!--//////////////////////////////////////////////////////////////////////////////////////  -->
+	<!-- 호스팅가입하기 호텔리스트보기(gettotal) -->
+	<select id="GetHostTotalCount" resultType="int">
+		select count(*) from hotels	
+		<if test="whatColumn == 'hotelname'">
+			where hotelname like #{keyword} 
+		</if>		
+		<if test="whatColumn == 'hoteladdr'">
+			where hoteladdr like #{keyword}
+		</if>
+		order by hotelnum desc
+	</select>
+	
+	<!-- 호스팅가입하기 호텔리스트보기 -->
+	<select id="GetHostDataList" resultType="MyHotel" parameterType="hashmap">
+			select hotelnum, hotels.membernum,companyregnum,
+			hotelcategory,hotelname,hoteladdr, members.membernum,membername
+			from hotels,members where hotels.membernum = members.membernum
+		<if test="whatColumn == 'hotelname'">
+			and hotelname like #{keyword}
+		</if>		
+		<if test="whatColumn == 'hoteladdr'">
+			and hoteladdr like #{keyword}
+		</if>
+		order by hotelnum desc
+	</select>
+	
+	
+		
+	
+	<select id="GetTotalCount" resultType="int">
+		select count(*) from hotels	where hotelname like #{search_p} or hoteladdr like #{search_p}
+	</select>
+
+	<!-- 호텔 등록하기 -->
+	<insert id="InsertData" parameterType="MyHotel">
+		insert into hotels(hotelnum, membernum, companyregnum, hotelcategory, hotelname, hoteladdr,
+						 hotelimg1, hotelimg2, hotelimg3, hotelimg4, hotelproduce1, hotelproduce2, hotelproduce3, hotelfacility) 
+		values(seqhotels.nextval, #{membernum}, #{companyregnum}, #{hotelcategory,jdbcType=VARCHAR}, #{hotelname,jdbcType=VARCHAR}, #{hoteladdr,jdbcType=VARCHAR},
+						 #{hotelimg1,jdbcType=VARCHAR}, #{hotelimg2,jdbcType=VARCHAR}, #{hotelimg3,jdbcType=VARCHAR}, #{hotelimg4,jdbcType=VARCHAR}, #{hotelproduce1,jdbcType=VARCHAR}, #{hotelproduce2,jdbcType=VARCHAR}, #{hotelproduce3,jdbcType=VARCHAR}, #{hotelfacility,jdbcType=VARCHAR})
+	
+	</insert>
+	
+	<!-- 호텔삭제 -->
+	<delete id="DeleteData" parameterType="MyHotel">
+		delete from hotels
+		where hotelnum=#{hotelnum}
+	</delete>
+
+	<!-- 호텔 업데이트 -->
+	<update id="UpdateData" parameterType="MyHotel">
+		update hotels set
+			hotelcategory=#{hotelcategory,jdbcType=VARCHAR}, hotelname=#{hotelname,jdbcType=VARCHAR}, hoteladdr=#{hoteladdr,jdbcType=VARCHAR}, hotelimg1=#{hotelimg1,jdbcType=VARCHAR},
+			hotelimg2=#{hotelimg2,jdbcType=VARCHAR}, hotelimg3=#{hotelimg3,jdbcType=VARCHAR}, hotelimg4=#{hotelimg4,jdbcType=VARCHAR}, hotelproduce1=#{hotelproduce1,jdbcType=VARCHAR},
+			hotelproduce2=#{hotelproduce2,jdbcType=VARCHAR}, hotelproduce3=#{hotelproduce3,jdbcType=VARCHAR}, hotelfacility=#{hotelfacility,jdbcType=VARCHAR}
+			where hotelnum=#{hotelnum}
+	</update>
+
+    <!-- 호스팅가입하기 호텔리스트에서 검색하는 곳-->
+	<select id="GetData" resultType="MyHotel">
+		select * from hotels
+		where hotelnum = #{hotelnum}
+	</select> 
+	
+	
+	<select id="GetHotelTotalCount" resultType="int">
+		select count(*) from hotels
+	</select> 
+
+	<select id="getAllHotelList" resultType="MyHotel" parameterType="hashmap">
+		select * from hotels 
+	</select>
+	
+	
+	<select id="getrecommandhotel" resultType="MyHotel" parameterType="hashmap">
+	<!-- <![CDATA[	
+		select hotelnum, hotels.membernum,hotelcategory,
+		hotelname,hoteladdr,hotelproduce1, hotelproduce2, hotelproduce3,
+		 hotelfacility,hotelimg1,hotelscore,dense_rank() over(order by hotelscore desc) as rank, members.membernum,membername
+		from hotels,members 
+		where hotels.membernum = members.membernum and hotelscore = 5
+	]]>	 -->
+	
+	<!-- select rownum row, hotelnum, hotels.membernum,hotelcategory,
+		hotelname,hoteladdr,hotelproduce1, hotelproduce2, hotelproduce3,
+		 hotelfacility,hotelimg1,hotelscore,dense_rank() over(order by hotelscore desc) as rank, members.membernum,membername
+		from hotels,members 
+		where hotels.membernum = members.membernum order by rank asc -->
+		
+		select rownum, hotelnum, hotelscore, hotelcategory,hotelname,hoteladdr,
+		hotelproduce1, hotelproduce2, hotelproduce3,hotelfacility,hotelimg1  from (
+		select hotelnum, hotelscore, hotelcategory,hotelname,hoteladdr,
+		hotelproduce1, hotelproduce2, hotelproduce3,hotelfacility,hotelimg1 from 
+		hotels order by hotelscore desc)
+		
+	</select>
+	
+	
+	<!-- 호텔 사업자등록번호 중복체크 -->
+	<select id="searchCompany" resultType="int">
+	select count(*) as cnt from hotels where companyregnum=#{companyregnum}
+	</select>
+</mapper>
+
+	
+	
+	
+	
+	

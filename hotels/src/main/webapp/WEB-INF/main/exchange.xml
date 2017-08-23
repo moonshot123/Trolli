@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<query yahoo:lang="ko-KR" yahoo:created="2017-07-22T15:16:37Z" yahoo:count="1" xmlns:yahoo="http://www.yahooapis.com/v1/base.rng">
+
+<!-- total: 4 -->
+
+
+<diagnostics>
+
+
+<url execution-time="1" execution-stop-time="1" execution-start-time="0">
+
+<![CDATA[http://www.datatables.org/yahoo/finance/yahoo.finance.xchange.xml]]>
+</url>
+
+<publiclyCallable>true</publiclyCallable>
+
+
+<cache execution-time="1" execution-stop-time="3" execution-start-time="2" type="MEMCACHED" method="GET">
+
+<![CDATA[fd590ab4e1abdcabcc9dae4b4089b546]]>
+</cache>
+
+
+<url execution-time="0" execution-stop-time="3" execution-start-time="3">
+
+<![CDATA[http://download.finance.yahoo.com/d/quotes.csv?s=USDKRW=X&f=snl1d1t1ab]]>
+</url>
+
+
+<query execution-time="1" execution-stop-time="4" execution-start-time="3">
+
+<![CDATA[select * from csv where url='http://download.finance.yahoo.com/d/quotes.csv?s=USDKRW=X&f=snl1d1t1ab' and columns='Symbol,Name,Rate,Date,Time,Ask,Bid']]>
+</query>
+
+<javascript execution-time="2" execution-stop-time="3" execution-start-time="1" table-name="yahoo.finance.xchange" instructions-used="18680"/>
+
+<user-time>4</user-time>
+
+<service-time>2</service-time>
+
+<build-version>2.0.164</build-version>
+
+</diagnostics>
+
+
+<results>
+
+
+<rate id="USDKRW">
+
+<Name>USD/KRW</Name>
+
+<Rate>1117.3300</Rate>
+
+<Date>7/22/2017</Date>
+
+<Time>2:48am</Time>
+
+<Ask>1118.3300</Ask>
+
+<Bid>1117.3300</Bid>
+
+</rate>
+
+</results>
+
+</query>

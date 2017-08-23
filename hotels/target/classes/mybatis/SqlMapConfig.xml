@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 마이바티스의 작동 규칙 정의 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+	
+	
+	<typeAliases>
+	
+		
+		<typeAlias alias="MyMain" type="main.model.Main"/>
+		<typeAlias alias="MyMember" type="member.model.Member"/>
+		<typeAlias alias="MyMember1" type="member.model.MemberCommonAndHost"/>
+		<typeAlias alias="MyHotel" type="hotel.model.Hotel"/>
+		<typeAlias alias="MyRoom" type="room.model.Room"/> 
+		<typeAlias alias="MyOrder" type="order.model.Order"/> 
+		<typeAlias alias="MyBoard" type="board.model.Board"/>
+		<typeAlias alias="MyComment" type="room.model.Comment"/>
+		<typeAlias alias="MyReservation" type="reservation.model.Reservation"/>
+		<typeAlias alias="MyStatic" type="reservation.model.AdminStatic"/>
+		<typeAlias alias="MyFavorate" type="favorate.model.Favorate"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mybatis/main.xml"/>
+		<mapper resource="mybatis/hotel.xml"/>
+		<mapper resource="mybatis/member.xml"/>
+		<mapper resource="mybatis/member1.xml"/>
+		<mapper resource="mybatis/room.xml"/> 
+		<mapper resource="mybatis/order.xml"/> 
+		<mapper resource="mybatis/Board.xml"/>
+		<mapper resource="mybatis/comment.xml"/>
+		<mapper resource="mybatis/reservation.xml"/>
+		<mapper resource="mybatis/static.xml"/>
+		<mapper resource="mybatis/favorate.xml"/>
+	</mappers>
+	
+	
+</configuration>

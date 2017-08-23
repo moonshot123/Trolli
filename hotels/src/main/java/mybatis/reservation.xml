@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reservation.model.Reservation">
+	
+	<select id="getReservartionData" resultType="MyReservation" parameterType="hashmap">
+		select * from reservation 
+	</select>
+	
+	<select id="GetReservationCount" resultType="int" parameterType="hashmap">
+		select count(*) from reservation 
+	</select>
+	
+	<delete id="deletelist" >
+		delete from reservation where resnum=#{resnum}
+	</delete>
+	
+	
+	
+	<select id="serchmembernum" resultType="int" >
+		select membernum from reservation where resnum=#{resnum}
+	</select>
+	
+	
+	
+	 
+	 
+	<insert id="insertreservation" parameterType="MyReservation">
+		insert into reservation(membernum, roomnum, startdate, enddate, resnum, place, totalpay)
+		values(#{membernum}, #{roomnum}, #{startdate}, #{enddate}, seqreserv.nextval ,#{place}, #{totalpay})
+	</insert>
+	 
+	
+
+	<update id="updateprice" parameterType="MyReservation"> 
+		update reservation set totalpay = (#{enddate} - #{startdate})*#{totalpay} where resnum=#{resnum} 
+	</update> 
+	 
+	 
+	<select id="getreservation" resultType="MyReservation" parameterType="MyReservation">
+		select * from reservation where resnum=#{resnum}
+	</select>
+	
+	 
+	 
+	 
+	 
+</mapper>
+
+<!-- 	 
+   totalpay NUMBER /* 총가격 */	 
+-->

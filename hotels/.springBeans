@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.8.4.201703310634-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/main-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/mail-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/hotel-servlet.xml</config>
+		<config>src/test/room-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/comment-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/favorate-servlet.xml</config>
+	</configs>
+	<autoconfigs>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/reservation-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/company-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/board-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/room-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/member-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/order-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/root-context.xml</config>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>

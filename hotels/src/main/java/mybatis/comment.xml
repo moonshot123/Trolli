@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="room.model.Comment">
+	
+	<!-- 후기(gettotal) -->
+	<select id="GetTotalCount" resultType="int">
+		select count(*) from comments where hotelnum=#{hotelnum} order by commentnum desc
+	</select>
+	
+	<!-- 후기리스트보기 -->
+	<select id="GetDataList" resultType="MyComment" parameterType="hashmap">
+		select rownum, commentnum,comments.hotelnum,comments.membernum,comments,score,hotels.hotelnum,hotels.membernum,hotels.hotelname
+		from comments,hotels 
+		where comments.hotelnum = hotels.hotelnum and comments.hotelnum=#{hotelnum} order by rownum desc
+	</select>
+
+	<!-- 후기작성 -->
+	 <insert id="insertComment" parameterType="MyComment">
+	 	
+		insert into comments(commentnum, hotelnum, membernum, comments,score)
+		values( seqcomments.nextval,#{hotelnum} ,#{membernum}, #{comments}, #{score})
+		 
+	 </insert>
+	 
+	 <!-- 후기수정폼  -->
+	  <select id="getupdatedata" resultType="MyComment" >
+		select * from comments	where commentnum = #{commentnum} 
+	</select>
+	
+	<!-- 후기업데이트 -->
+	 <update id="updatedata" parameterType="MyComment">
+	 	update comments set hotelnum=#{hotelnum},membernum=#{membernum},comments=#{comments},score=#{score} 	
+	 	where commentnum=#{commentnum}
+	 </update>
+	 
+	 <!-- 후기삭제  -->
+	<delete id="deletedata"  parameterType="MyComment">
+	 	delete from comments where commentnum=#{commentnum}
+	 </delete>
+	
+</mapper>

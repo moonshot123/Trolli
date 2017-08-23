@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="room.model.Room">
+
+	
+	<!-- 호스팅가입하기 호텔리스트보기(gettotal) -->
+	<select id="gettotalroom" resultType="int">
+		select count(*) from rooms	
+		order by roomnum desc
+	</select>
+
+	<select id="GetCommentCountbyhotel" resultType="int">
+		select count(*) from comments 
+		where hotelnum = #{hotelnum}	
+		order by commentnum desc
+	</select>
+	
+		<!-- <if test="whatColumn == 'roomname'">
+			where roomname like #{keyword} 
+		</if>		
+		<if test="whatColumn == 'roomsize'">
+			roomsize like #{keyword}
+		</if> -->
+	
+	<!-- 호스팅가입하기 호텔리스트보기 -->
+	<select id="GetroomDataList" resultType="MyRoom" parameterType="hashmap">
+		select * from rooms	order by roomnum desc
+	</select>
+
+	<select id="GetCommentist" resultType="MyComment" parameterType="hashmap">
+		select * from rooms	order by roomnum desc
+	</select>
+	 
+	 
+		<!-- <if test="whatColumn == 'roomname'">
+			where roomname like #{keyword}
+		</if>		
+		<if test="whatColumn == 'roomsize'">
+			where roomsize like #{keyword}
+		</if> -->
+	 
+	 <delete id="deleteRoom">
+	 	delete from rooms where roomnum=#{roomnum}
+	 </delete>
+	 
+	 
+	 <insert id="insertRoom" parameterType="MyRoom">
+	 	
+		insert into rooms(roomnum, hotelnum, roomname, roomsize,roompeople,
+		roomimg1,roomimg2,roomproduce1,roomproduce2,roomproduce3,roomprice,roompoint)
+		values( seqrooms.nextval,#{hotelnum} ,#{roomname}, #{roomsize}, #{roompeople} ,#{roomimg1}
+		 ,#{roomimg2}, #{roomproduce1}, #{roomproduce2},#{roomproduce3}, #{roomprice}, #{roompoint})
+		 
+	 </insert>
+	 
+	 
+	 <select id="getroomdata" resultType="MyRoom" >
+		select * from rooms	where roomnum = #{roomnum} 
+	</select>
+	 
+	 <update id="updateRoom" parameterType="MyRoom">
+	 	update rooms set 
+	 	 hotelnum=#{hotelnum}, roomname=#{roomname}, roomsize=#{roomsize},
+	 	roompeople=#{roompeople},roomimg1=#{roomimg1},roomimg2=#{roomimg2},roomproduce1=#{roomproduce1},
+	 	roomproduce2=#{roomproduce2},roomproduce3=#{roomproduce3},roomprice=#{roomprice},roompoint=#{roompoint}   
+	 		 	
+	 	where roomnum=#{roomnum}
+	 </update>
+	 
+	 
+	<select id="GetroomCountbyhotel" resultType="int" parameterType="hashmap">
+		select count(*) from rooms where hotelnum=#{hotelnum}
+	</select>
+	 
+	<select id="roomlist" resultType="MyRoom" parameterType="hashmap">
+		<![CDATA[
+		select hotelimg1, hotelimg2, hotelimg3, hotelimg4, h.hotelnum, roomnum, roomname, roomsize,
+			roompeople, roomimg1, roomimg2, roomproduce1, roomproduce2, roomproduce3, roomprice, roompoint
+			from hotels h, rooms r where h.hotelnum=r.hotelnum and h.hotelnum=#{hotelnum} and roomnum not in
+			(select roomnum from reservation 
+		where to_char(enddate,'yyyy-mm-dd') > #{searchStart,jdbcType=VARCHAR} and 
+		to_char(startdate,'yyyy-mm-dd') < #{searchEnd,jdbcType=VARCHAR} )
+		]]>
+	</select>
+
+	<select id="himagelist" resultType="MyRoom" parameterType="hashmap">
+		select hotelimg1, hotelimg2, hotelimg3, hotelimg4
+			from hotels where hotelnum=#{hotelnum}
+	</select>
+	
+	
+	<select id="gethotelnum" resultType="int" parameterType="int">
+		select hotelnum from rooms	where roomnum=#{roomnum}
+	</select>
+	
+	<!-- 후기작성 -->
+	 <insert id="insertComment" parameterType="MyComment">
+	 	
+		insert into comments(commentnum, hotelnum, membernum, comments,score)
+		values( seqcomments.nextval,#{hotelnum} ,#{membernum}, #{comments}, #{score})
+		 
+	 </insert>
+	 
+	 <!-- 후기수정폼  -->
+	  <select id="getupdatedata" resultType="MyComment" >
+		select * from comments	where commentnum = #{commentnum} 
+	</select>
+	
+	<!-- 후기업데이트 -->
+	 <update id="updatedata" parameterType="MyComment">
+	 	update comments set hotelnum=#{hotelnum},membernum=#{membernum},comments=#{comments},score=#{score} 	
+	 	where commentnum=#{commentnum}
+	 </update>
+	 
+	 <!-- 후기삭제  -->
+	<delete id="deletedata"  parameterType="MyComment">
+	 	delete from comments where commentnum=#{commentnum}
+	 </delete>
+	 
+	 
+	
+	 
+</mapper>
+

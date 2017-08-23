@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member.model.MemberCommonAndHost">
+
+	<select id="GetBuyTotalCount" resultType="int" parameterType="hashmap">
+		select count(*) from reservation where membernum=#{membernum}
+	</select>
+
+	<select id="MyBuyList" resultType="MyMember1">
+		select resnum, roomimg1,
+		hotelname, roomname, roomprice, startdate, enddate,totalprice from
+		(select membernum, hotelnum, resnum , roomimg1, hr.roomnum, startdate,
+		enddate, roomname, roomprice,(enddate-startdate)*roomprice totalprice
+		from
+		(select m.membernum, resnum, roomnum, startdate, enddate from
+		members m,
+		reservation hr
+		where m.membernum=hr.membernum and
+		hr.membernum=#{membernum}) hr, rooms r where
+		hr.roomnum= r.roomnum) hr,
+		hotels h
+		where h.hotelnum= hr.hotelnum
+
+		order by startdate asc
+	</select>
+
+
+	<select id="GetSellTotalCount" resultType="int" parameterType="hashmap">
+		select count(*) from
+		(select resnum, membername, hotelname, roomname,
+		startdate, enddate,
+		roomprice, totalprice from
+		(select resnum,
+		hr.membernum, m.roomnum, hotelname, roomname,
+		startdate, enddate,
+		roomprice,(enddate-startdate)*roomprice totalprice from
+		reservation hr,
+		(select membernum, roomnum, hotelname,roomname,
+		roomprice from hotels h,
+		rooms r where h.hotelnum=r.hotelnum and
+		membernum=#{membernum}) m
+		where m.roomnum=hr.roomnum)hr, members m
+		where
+		hr.membernum=m.membernum)
+	</select>
+
+	<select id="MySellList" resultType="MyMember1">
+		select resnum, membername,
+		hotelname, roomname, startdate, enddate, roomprice, totalprice from
+		(select resnum, hr.membernum, m.roomnum, hotelname, roomname,
+		startdate, enddate, roomprice,(enddate-startdate)*roomprice totalprice
+		from reservation hr,
+		(select membernum, roomnum, hotelname,roomname, roomprice from hotels h,
+		rooms r where h.hotelnum=r.hotelnum and membernum=#{membernum}) m
+		where m.roomnum=hr.roomnum)hr, members m where
+		hr.membernum=m.membernum
+		order by startdate asc
+	</select>
+
+</mapper>

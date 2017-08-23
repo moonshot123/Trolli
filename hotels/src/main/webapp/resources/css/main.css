@@ -1,0 +1,138 @@
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2,
+	.col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3,
+	.col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5,
+	.col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6,
+	.col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8,
+	.col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9,
+	.col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11,
+	.col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12
+	{
+	/* border: 1px solid red; */
+}
+
+.bottom_h{
+	line-height: 1em;
+}
+
+#video {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 0px;
+	height: 0;
+}
+
+#video_detail {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+
+#search_formation{
+	position: absolute;
+	top:18%;
+	left:3%;	
+	background-color: #ffffff; /* #E6E6E6; */
+	border-radius: 0.5em 0.5em 0.5em 0.5em;
+	opacity:0.9;
+}
+/*   #search {
+	position: absolute;
+	margin-top: 5%;
+	margin-left: 5%;
+	width: 50%;
+	height: 45%;
+	background-color: #ffffff; #ffffff 화이트  파랑#0174DF 회색 #151515
+	border-radius: 0.5em 0.5em 0.5em 0.5em;
+	opacity: 0.7;
+}  */
+
+/* #search_detail {
+	position: absolute;
+	margin-top: 6%;
+	margin-left: 6%;
+} */
+
+/* #search_button{
+	position: absolute;
+	margin-top: 8.5%;
+	margin-left: 33%;
+} */
+#sns_icon {
+	text-align: center;
+}
+
+#movetopbt {
+	cursor: pointer;
+	position: absolute;
+	right: 20px;
+	margin-bottom: 5px;
+}
+
+/* html5  */
+/* #search_placeholder{
+color: green;
+::-webkit-input-placeholder { color: #b7b7b7 !important; }
+::-moz-placeholder {color: #b7b7b7 !important; }
+:-ms-input-placeholder { color: #b7b7b7 !important; } 
+:-o-input-placeholder { color: #b7b7b7 !important; } 
+
+} */
+
+/* html4 */
+/* placeholder 색상 */
+/* input[placeholder]:focus { color: #04B431; } */
+
+/*placeholder  */
+.placeholder {
+	color: #252525;
+}
+
+input::-moz-placeholder {
+	color: #252525;
+	opacity: 1;
+}
+
+input:-ms-input-placeholder {
+	color: #252525;
+}
+
+input::-webkit-input-placeholder {
+	color: #252525;
+}
+
+input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder
+	{
+	color: transparent;
+}
+
+input:focus:-moz-placeholder, textarea:focus:-moz-placeholder {
+	color: transparent;
+}
+
+input:focus::-moz-placeholder, textarea:focus::-moz-placeholder {
+	color: transparent;
+}
+
+input:focus:-ms-input-placeholder, textarea:focus:-ms-input-placeholder
+	{
+	color: transparent;
+}
+
+
+/* 메인 서울 부산 제주도 호버 */
+ a.ex1:hover, a.ex1:active {
+            position:relative;
+			opacity: 0.8;
+			text-decoration: none;
+			}
+			
+				
+/* 조직도 배경색지정 */			
+#peopletop{
+	height: 200px;
+	background-color:#00bbd5;
+}
+			
